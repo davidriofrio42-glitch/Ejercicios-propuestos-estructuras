@@ -1,0 +1,70 @@
+#include <iostream>
+
+using namespace std;
+
+// Estructura para almacenar los datos de cada jugador
+struct Jugador {
+    char nombre[50];
+    int puntos;
+    int faltas;
+};
+
+// Función para imprimir la tabla de jugadores
+void imprimirClasificacion(Jugador jugadores[], int n) {
+    cout << "--- Tabla de Clasificacion ---" << endl;
+    for (int i = 0; i < n; i++) {
+        cout << i + 1 << ". " 
+             << "Nombre: " << jugadores[i].nombre 
+             << " | Puntos: " << jugadores[i].puntos 
+             << " | Faltas: " << jugadores[i].faltas << endl;
+    }
+}
+
+// Burbuja adaptada para ordenar por múltiples criterios
+void ordenarClasificacion(Jugador jugadores[], int n) {
+    for (int i = 0; i < n - 1; ++i) {
+        for (int j = 0; j < n - i - 1; ++j) {
+            bool intercambiar = false;
+
+            // Criterio 1: Ordenar por puntos (mayor a menor)
+            if (jugadores[j].puntos < jugadores[j + 1].puntos) {
+                intercambiar = true;
+            } 
+            // Criterio 2: Si los puntos son iguales, desempatar por faltas (menor a mayor)
+            else if (jugadores[j].puntos == jugadores[j + 1].puntos) {
+                if (jugadores[j].faltas > jugadores[j + 1].faltas) {
+                    intercambiar = true;
+                }
+            }
+
+            // Si se debe intercambiar, se hace el swap
+            if (intercambiar) {
+                Jugador temp = jugadores[j];
+                jugadores[j] = jugadores[j + 1];
+                jugadores[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    Jugador torneo[] = {
+        {"Ana", 150, 10},
+        {"Luis", 200, 12},
+        {"Sara", 150, 5}, // Mismos puntos que Ana, pero menos faltas
+        {"Juan", 90, 3},
+        {"Eva", 200, 15}, // Mismos puntos que Luis, pero más faltas
+        {"Leo", 150, 10}  // Exactamente igual que Ana
+    };
+    int n = sizeof(torneo) / sizeof(torneo[0]);
+
+    cout << "Clasificacion sin ordenar:" << endl;
+    imprimirClasificacion(torneo, n);
+
+    ordenarClasificacion(torneo, n);
+
+    cout << "\nClasificacion Final Ordenada:" << endl;
+    imprimirClasificacion(torneo, n);
+
+    return 0;
+}
