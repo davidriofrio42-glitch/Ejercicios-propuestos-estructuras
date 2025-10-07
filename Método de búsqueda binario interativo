@@ -1,0 +1,143 @@
+/*En una institución educativa, el área de Secretaría Académica necesita un programa que permita registrar las matrículas de los estudiantes, ordenarlas y buscar una matrícula específica rápidamente.
+
+El programa debe:
+Pedir al usuario cuántos estudiantes desea registrar.
+Permitir ingresar las matrículas (números enteros).
+Ordenar las matrículas usando el método Burbuja, mostrando cada pasada, comparación e intercambio.
+Aplicar el método de búsqueda binaria iterativo para encontrar una matrícula ingresada por el usuario, mostrando los pasos del proceso (inicio, fin, medio, comparaciones).
+Si la matrícula no se encuentra, indicar que no existe y permitir buscar otra.
+Si se encuentra, mostrar la posición y preguntar si desea continuar buscando.
+Si el usuario responde “N”, mostrar el mensaje “Saliendo del sistema de búsqueda de matrículas...” y finalizar.
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+// funcion que lee los numeros de matricula
+void leer_matriculas(string estudiantes[], int n) {
+    for (int i = 0; i < n; i++) {  // Itera sobre cada estudiante
+        cout << "ingrese el numero de matricula del estudiante " << i + 1 << ": ";  // Muestra mensaje para cada estudiante
+        cin >> estudiantes[i];  // Lee la matrícula y la guarda en el array
+    }
+}
+
+// funcion que muestra el vector
+void mostrar_lista(string estudiantes[], int n) {
+    for (int i = 0; i < n; i++)  // Itera sobre cada elemento del array
+        cout << estudiantes[i] << " ";  // Imprime cada matrícula seguida de espacio
+    cout << endl;  // Salto de línea al final
+}
+
+// funcion que ordena el vector con metodo burbuja paso a paso
+void ordenar_burbuja(string estudiantes[], int n) {
+    cout << "\nordenando la lista de estudiantes..." << endl;  // Mensaje inicial
+
+    for (int i = 0; i < n - 1; i++) {  // Bucle externo para cada pasada
+        cout << "\npasada " << i + 1 << endl;  // Muestra el número de pasada actual
+
+        // muestra la lista antes de cada pasada
+        cout << "lista antes: ";  // Mensaje antes de mostrar lista
+        mostrar_lista(estudiantes, n);  // Llama función para mostrar lista actual
+
+        // compara e intercambia los elementos adyacentes
+        for (int j = 0; j < n - i - 1; j++) {  // Bucle interno para comparaciones
+            cout << "comparando " << estudiantes[j] << " vs " << estudiantes[j + 1];  // Muestra comparación actual
+            if (estudiantes[j] > estudiantes[j + 1]) {  // Si están en orden incorrecto
+                cout << "  hay intercambio" << endl;  // Indica que habrá intercambio
+
+                // realiza el intercambio
+                string temp = estudiantes[j];  // Guarda temporalmente el primer valor
+                estudiantes[j] = estudiantes[j + 1];  // Asigna el segundo valor al primero
+                estudiantes[j + 1] = temp;  // Asigna el valor temporal al segundo
+
+                // muestra la lista despues del cambio
+                cout << "lista ahora: ";  // Mensaje después del intercambio
+                mostrar_lista(estudiantes, n);  // Muestra lista actualizada
+            } else {
+                cout << "  no hay intercambio" << endl;  // Indica que no hubo intercambio
+            }
+        }
+        // muestra que elemento ya quedo en su posicion final
+        cout << "elemento en posicion " << n - i - 1 << " ya ordenado" << endl;  // Indica elemento ordenado
+    }
+
+    // muestra la lista final ordenada
+    cout << "\nlista final ordenada: ";  // Mensaje para lista final
+    mostrar_lista(estudiantes, n);  // Muestra lista completamente ordenada
+    cout << endl;  // Salto de línea adicional
+}
+
+// funcion que realiza la busqueda binaria iterativa
+void busqueda_binaria(string estudiantes[], int n) {
+    char opcion = 's';  // Variable para controlar repetición
+
+    while (opcion == 's' || opcion == 'S') {  // Mientras usuario quiera buscar
+
+        // pide el valor a buscar
+        string buscado;  // Variable para almacenar matrícula a buscar
+        cout << "ingrese el numero de matricula del estudiante a buscar: ";  // Solicita matrícula
+        cin >> buscado;  // Lee la matrícula a buscar
+
+        // define los limites de busqueda
+        int inicio = 0;  // Establece límite inferior
+        int fin = n - 1;  // Establece límite superior
+        bool encontrado = false;  // Bandera para indicar si se encontró
+
+        // realiza la busqueda binaria iterativa
+        while (inicio <= fin) {  // Mientras haya elementos por buscar
+            int medio = inicio + (fin - inicio) / 2;  // Calcula punto medio
+
+            cout << "comparando con posicion " << medio << " (" << estudiantes[medio] << ")" << endl;  // Muestra comparación
+
+            if (estudiantes[medio] == buscado) {  // Si encuentra la matrícula
+                cout << "MATRICULA ENCONTRADA EN LA POSICION" << medio << endl;  // Mensaje de éxito
+                encontrado = true;  // Marca como encontrado
+                break;  // Sale del bucle de búsqueda
+            }
+            else if (estudiantes[medio] < buscado) {  // Si la matrícula buscada es mayor
+                cout << "buscando a la derecha\n" << endl;  // Indica búsqueda a la derecha
+                inicio = medio + 1;  // Ajusta límite inferior
+            }
+            else {  // Si la matrícula buscada es menor
+                cout << "buscando a la izquierda\n" << endl;  // Indica búsqueda a la izquierda
+                fin = medio - 1;  // Ajusta límite superior
+            }
+        }
+
+        // mensaje si no se encontro el valor
+        if (!encontrado)  // Si no se encontró la matrícula
+            cout << "el estudiante no se encuentra registrado" << endl;  // Mensaje de no encontrado
+
+        // pregunta si desea buscar otro estudiante
+        cout << "\ndesea buscar otro estudiante? (s/n): ";  // Pregunta si continuar
+        cin >> opcion;  // Lee la opción del usuario
+
+        if (opcion != 's' && opcion != 'S')  // Si no quiere continuar
+            cout << "saliendo del programa..." << endl;  // Mensaje de salida
+    }
+}
+
+int main() {
+
+    // muestra el titulo del programa
+    cout << "===== METODO DE BUSQUEDA BINARIA ITERATIVA =====" << endl;  // Título del programa
+
+    // pide la cantidad de estudiantes
+    int n;  // Variable para cantidad de estudiantes
+    cout << "cuantos estudiantes desea registrar: ";  // Solicita cantidad
+    cin >> n;  // Lee la cantidad
+
+    // declara el vector de matriculas
+    string estudiantes[n];  // Crea array para almacenar matrículas
+
+    // llama a la funcion para leer las matriculas
+    leer_matriculas(estudiantes, n);  // Llama función para llenar el array
+
+    // ordena el vector con burbuja
+    ordenar_burbuja(estudiantes, n);  // Llama función para ordenar array
+
+    // realiza la busqueda binaria
+    busqueda_binaria(estudiantes, n);  // Llama función para búsquedas
+
+    return 0;  
+}
