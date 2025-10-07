@@ -1,0 +1,98 @@
+/*en una empresa se desea almacenar los números de identificación de los empleados (id) para poder consultar rápidamente si un empleado está registrado o no.
+los ids deben ingresarse por teclado, luego se ordenan mediante el método burbuja (mostrando paso a paso el proceso de ordenamiento).
+después de ordenar, el programa aplicará una búsqueda binaria recursiva, mostrando en pantalla cómo se va reduciendo el rango de búsqueda hasta encontrar (o no) el id buscado.
+el usuario podrá buscar varios ids hasta que decida salir del programa.
+*/
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+void mostrar_lista(string arr[], int n) {
+    for (int i = 0; i < n; i++) // recorre todos los elementos
+        cout << arr[i] << " "; // imprime cada elemento
+    cout << endl; // salto de linea al final
+}
+// funcion que ordena el arreglo con burbuja mostrando pasos
+void ordenar_burbuja(string arr[], int n) {
+    cout << "\nordenando la lista de empleados..." << endl; // mensaje inicial
+
+    for (int i = 0; i < n - 1; i++) { // cada pasada
+        cout << "\npasada " << i + 1 << endl; // numero de pasada
+        cout << "lista antes: "; // estado antes de la pasada
+        mostrar_lista(arr, n); // muestra arreglo
+
+        for (int j = 0; j < n - i - 1; j++) { // comparaciones adyacentes
+            cout << "comparando " << arr[j] << " vs " << arr[j + 1]; // muestra comparacion
+            if (arr[j] > arr[j + 1]) { // si hay que intercambiar
+                cout << "  hay intercambio" << endl; 
+                string temp = arr[j]; // guarda valor temporal
+                arr[j] = arr[j + 1]; // realiza intercambio
+                arr[j + 1] = temp; // completa intercambio
+                cout << "lista ahora: "; // muestra arreglo actualizado
+                mostrar_lista(arr, n); // imprime estado actual
+            } else {
+                cout << "  no hay intercambio" << endl; // si no hay intercambio
+            }
+        }
+        cout << "elemento en posicion " << n - i - 1 << " ya ordenado" << endl; // elemento final de la pasada
+    }
+
+    cout << "\nlista final ordenada: "; // mensaje final
+    mostrar_lista(arr, n); // muestra arreglo completamente ordenado
+    cout << endl;
+}
+
+// funcion recursiva para busqueda binaria
+int busqueda_binaria_recursiva(string arr[], int inicio, int fin, string buscado) {
+    if (inicio > fin) // caso base no encontrado
+        return -1;
+    int medio = inicio + (fin - inicio) / 2; // calcula mitad
+    cout << "comparando con posicion " << medio << " (" << arr[medio] << ")" << endl; // muestra comparacion
+    if (arr[medio] == buscado) // encontrado
+        return medio;
+    else if (arr[medio] < buscado) // buscar derecha
+        return busqueda_binaria_recursiva(arr, medio + 1, fin, buscado);
+    else // buscar izquierda
+        return busqueda_binaria_recursiva(arr, inicio, medio - 1, buscado);
+}
+
+// funcion principal
+int main() {
+
+    cout << "===== metodo de busqueda binaria recursiva =====" << endl; // titulo
+
+    int n; // cantidad de empleados
+    cout << "cuantos empleados desea registrar: "; // pide cantidad
+    cin >> n; 
+
+    string empleados[n]; // arreglo de ids
+
+    for (int i = 0; i < n; i++) { // ingreso de ids
+        cout << "ingrese el id del empleado " << i + 1 << ": ";
+        cin >> empleados[i];
+    }
+
+    ordenar_burbuja(empleados, n); // ordena y muestra paso a paso
+
+    char opcion = 's'; // controlar busquedas
+    while (opcion == 's' || opcion == 'S') { // multiples busquedas
+        string buscado; 
+        cout << "\ningrese el id del empleado a buscar: ";
+        cin >> buscado;
+
+        cout << "buscando el valor..." << endl; 
+        int posicion = busqueda_binaria_recursiva(empleados, 0, n - 1, buscado); 
+
+        if (posicion != -1)
+            cout << "empleado encontrado en la posicion " << posicion << endl;
+        else
+            cout << "el empleado no se encuentra registrado" << endl;
+
+        cout << "desea buscar otro empleado? (s/n): ";
+        cin >> opcion;
+    }
+
+    cout << "saliendo del programa..." << endl;
+    return 0;
+}
