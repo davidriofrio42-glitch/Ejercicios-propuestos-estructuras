@@ -1,0 +1,34 @@
+Un supermercado guarda los códigos de 8 productos en un arreglo. El usuario debe ingresar un código y el programa debe buscar si ese producto existe o no en el inventario.
+
+Solución:
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int codigos[8] = {101, 202, 303, 404, 505, 606, 707, 808}; // Lista de códigos
+    int buscado;                                               // Código a buscar
+    int posicion = -1;                                         // -1 significa "no encontrado"
+
+    cout << "Ingrese el codigo del producto a buscar: ";
+    cin >> buscado;
+
+    // Búsqueda secuencial
+    for (int i = 0; i < 8; i++) {
+        if (codigos[i] == buscado) {
+            posicion = i;
+            break;
+        }
+    }
+
+    // Mostrar resultado
+    if (posicion != -1) {
+        cout << "El producto con codigo " << buscado 
+             << " se encontro en la posicion " << posicion << endl;
+    } else {
+        cout << "El producto con codigo " << buscado 
+             << " no existe en el inventario." << endl;
+    }
+
+    return 0;
+}
