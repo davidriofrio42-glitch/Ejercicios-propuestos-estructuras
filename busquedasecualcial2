@@ -1,0 +1,35 @@
+Un profesor tiene almacenados los nombres de 5 estudiantes en un arreglo. El programa debe pedir un nombre y buscar si ese estudiante está en la lista.
+
+Solución
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string estudiantes[5] = {"Carlos", "Andrea", "Sofia", "Juan", "Pedro"}; 
+    string buscado;                 // Nombre que se quiere buscar
+    int posicion = -1;              // -1 significa "no encontrado"
+
+    cout << "Ingrese el nombre del estudiante a buscar: ";
+    cin >> buscado;
+
+    // Búsqueda secuencial
+    for (int i = 0; i < 5; i++) {
+        if (estudiantes[i] == buscado) {
+            posicion = i;
+            break;
+        }
+    }
+
+    // Mostrar resultado
+    if (posicion != -1) {
+        cout << "El estudiante " << buscado 
+             << " se encontro en la posicion " << posicion << endl;
+    } else {
+        cout << "El estudiante " << buscado 
+             << " no esta en la lista." << endl;
+    }
+
+    return 0;
+}
