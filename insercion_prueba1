@@ -1,0 +1,50 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;  // número de vehículos
+
+    cout << "Ingrese la cantidad de autos: ";
+    cin >> n;
+
+    double kmPorLitro[n];  // arreglo para guardar los rendimientos
+
+    // Entrada de datos
+    for (int i = 0; i < n; i++) {
+        cout << "Ingrese el rendimiento del auto " << i + 1 << " (km/L): ";
+        cin >> kmPorLitro[i];
+    }
+
+    // =============================
+    // Ordenamiento por Inserción
+    // =============================
+    for (int i = 1; i < n; i++) {
+        double actual = kmPorLitro[i];  // elemento actual a insertar
+        int j = i - 1;
+
+        // mover los elementos mayores hacia la derecha
+        while (j >= 0 && kmPorLitro[j] > actual) {
+            kmPorLitro[j + 1] = kmPorLitro[j];
+            j--;
+        }
+        kmPorLitro[j + 1] = actual;  // insertar el elemento en su posición correcta
+    }
+
+     // Mostrar los resultados ordenados
+ 
+    cout << "\n--- Rendimientos ordenados (de menor a mayor eficiencia) ---\n";
+    for (int i = 0; i < n; i++) {
+        cout << "Auto " << i + 1 << ": " << kmPorLitro[i] << " km/L" << endl;
+    }
+
+
+    // Mostrar el más y el menos eficiente
+
+    cout << "\nAuto que consume MAS combustible (menor rendimiento): " 
+         << kmPorLitro[0] << " km/L" << endl;
+
+    cout << "Auto que consume MENOS combustible (mayor rendimiento): " 
+         << kmPorLitro[n - 1] << " km/L" << endl;
+
+    return 0;
+}
