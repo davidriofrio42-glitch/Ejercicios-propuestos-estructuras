@@ -1,41 +1,37 @@
 #include <iostream>
-
 using namespace std;
 
-// Función para imprimir un arreglo
-void imprimirArreglo(int arr[], int n) {
-    for (int i = 0; i < n; i++) {
-        cout << arr[i] << " ";
-    }
-    cout << endl;
-}
+int main() {
+    // Arreglo con los puntajes desordenados del día
+    int puntajes[] = {4500, 10200, 3200, 8900, 7500};
+    int cantidad = 5;
 
-// Función de burbuja para ordenar en modo descendente
-void burbujaDescendente(int lista[], int n) {
-    for (int i = 0; i < n - 1; ++i) {
-        for (int j = 0; j < n - i - 1; ++j) {
-            // Si el elemento actual es MENOR que el siguiente, los intercambiamos
-            if (lista[j] < lista[j + 1]) {
-                // Intercambio manual
-                int temp = lista[j];
-                lista[j] = lista[j + 1];
-                lista[j + 1] = temp;
+    cout << "--- LEADERBOARD DEL ARCADE ---" << endl;
+    cout << "Ordenando puntajes de mayor a menor...\n" << endl;
+
+    // Método de Burbuja Descendente
+    for (int i = 0; i < cantidad - 1; i++) {
+        for (int j = 0; j < cantidad - i - 1; j++) {
+            // Evaluamos si el actual es MENOR que el siguiente
+            if (puntajes[j] < puntajes[j + 1]) {
+                // Si es menor, hacemos el intercambio (swap) para que el mayor suba
+                int temporal = puntajes[j];
+                puntajes[j] = puntajes[j + 1];
+                puntajes[j + 1] = temporal;
             }
         }
     }
-}
 
-int main() {
-    int numeros[] = {3, 29, 5, 15, 8, 2};
-    int n = sizeof(numeros) / sizeof(numeros[0]); // Calculamos el tamaño del arreglo
-
-    cout << "Arreglo original: ";
-    imprimirArreglo(numeros, n);
-
-    burbujaDescendente(numeros, n);
-
-    cout << "Arreglo ordenado descendente: ";
-    imprimirArreglo(numeros, n);
+    // Imprimir el resultado final
+    cout << "Ranking Final:" << endl;
+    for (int i = 0; i < cantidad; i++) {
+        cout << i + 1 << " LUGAR: " << puntajes[i] << " pts";
+        // Condición para el récord
+        if (i == 0 && puntajes[i] > 10000) {
+            cout << " -> !NUEVO RECORD!";
+        }
+        cout << endl;
+    }
 
     return 0;
 }
