@@ -2,49 +2,39 @@
 using namespace std;
 
 int main() {
-    int n;  // número de vehículos
+    int cartas[6];
+    int cantidad = 6;
 
-    cout << "Ingrese la cantidad de autos: ";
-    cin >> n;
-
-    double kmPorLitro[n];  // arreglo para guardar los rendimientos
-
-    // Entrada de datos
-    for (int i = 0; i < n; i++) {
-        cout << "Ingrese el rendimiento del auto " << i + 1 << " (km/L): ";
-        cin >> kmPorLitro[i];
+    cout << "--- MAZO DE CARTAS MAGICAS ---" << endl;
+    // Pedimos al usuario que ingrese los valores
+    for(int i = 0; i < cantidad; i++) {
+        cout << "Ingresa el nivel de ataque de la carta " << i + 1 << ": ";
+        cin >> cartas[i];
     }
 
-    // =============================
-    // Ordenamiento por Inserción
-    // =============================
-    for (int i = 1; i < n; i++) {
-        double actual = kmPorLitro[i];  // elemento actual a insertar
+    // Método de Ordenamiento por Inserción
+    for(int i = 1; i < cantidad; i++) {
+        int cartaActual = cartas[i];
         int j = i - 1;
 
-        // mover los elementos mayores hacia la derecha
-        while (j >= 0 && kmPorLitro[j] > actual) {
-            kmPorLitro[j + 1] = kmPorLitro[j];
+        // Desplazamos las cartas mayores hacia la derecha para hacer espacio
+        while(j >= 0 && cartas[j] > cartaActual) {
+            cartas[j + 1] = cartas[j];
             j--;
         }
-        kmPorLitro[j + 1] = actual;  // insertar el elemento en su posición correcta
+        // Insertamos la carta en el espacio vacío que creamos
+        cartas[j + 1] = cartaActual;
     }
 
-     // Mostrar los resultados ordenados
- 
-    cout << "\n--- Rendimientos ordenados (de menor a mayor eficiencia) ---\n";
-    for (int i = 0; i < n; i++) {
-        cout << "Auto " << i + 1 << ": " << kmPorLitro[i] << " km/L" << endl;
+    // Mostrar los resultados
+    cout << "\nMazo ordenado (De menor a mayor ataque):" << endl;
+    for(int i = 0; i < cantidad; i++) {
+        cout << "[" << cartas[i] << "] ";
     }
-
-
-    // Mostrar el más y el menos eficiente
-
-    cout << "\nAuto que consume MAS combustible (menor rendimiento): " 
-         << kmPorLitro[0] << " km/L" << endl;
-
-    cout << "Auto que consume MENOS combustible (mayor rendimiento): " 
-         << kmPorLitro[n - 1] << " km/L" << endl;
+    
+    cout << "\n\nAnalisis del mazo:" << endl;
+    cout << "Carta mas debil: " << cartas[0] << endl;
+    cout << "CARTA JEFE (Mas fuerte): " << cartas[cantidad - 1] << endl;
 
     return 0;
 }
