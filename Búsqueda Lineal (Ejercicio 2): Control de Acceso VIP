@@ -1,0 +1,33 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    // Lista de invitados VIP
+    string listaVIP[] = {"Carlos", "Maria", "Elena", "Fernando", "Lucia"};
+    int cantidad = 5;
+    string nombreIngresado;
+    bool accesoConcedido = false;
+
+    cout << "--- CONTROL DE ACCESO A GALA VIP ---" << endl;
+    cout << "Ingrese el nombre del invitado: ";
+    cin >> nombreIngresado;
+
+    // Búsqueda Lineal de Textos
+    for (int i = 0; i < cantidad; i++) {
+        // Comparamos el texto de la lista con el texto ingresado
+        if (listaVIP[i] == nombreIngresado) {
+            accesoConcedido = true;
+            break; // Si lo encuentra, deja de buscar
+        }
+    }
+
+    // Verificación final
+    if (accesoConcedido) {
+        cout << "\n[✓] ACCESO PERMITIDO. Bienvenido/a a la gala, " << nombreIngresado << "!" << endl;
+    } else {
+        cout << "\n[X] ACCESO DENEGADO. El nombre '" << nombreIngresado << "' no esta en la lista." << endl;
+    }
+
+    return 0;
+}
