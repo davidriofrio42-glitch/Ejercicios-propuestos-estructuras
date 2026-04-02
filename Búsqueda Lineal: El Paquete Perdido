@@ -1,0 +1,34 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Inventario de códigos de paquetes en la bodega
+    int bodega[] = {1054, 8821, 3099, 4012, 7734, 9920, 2011, 5500};
+    int cantidad = 8;
+    int codigoCliente;
+    bool encontrado = false;
+
+    cout << "--- BODEGA DE ENVIOS ---" << endl;
+    cout << "Ingrese el codigo de guia a buscar: ";
+    cin >> codigoCliente;
+
+    // Método de Búsqueda Lineal
+    for(int i = 0; i < cantidad; i++) {
+        // Imprimimos el rastro para que el estudiante vea cómo avanza
+        cout << "Revisando posicion " << i << " (Codigo: " << bodega[i] << ")" << endl;
+        
+        if(bodega[i] == codigoCliente) {
+            encontrado = true;
+            break; // Detenemos la búsqueda porque ya lo encontramos
+        }
+    }
+
+    // Veredicto final
+    if(encontrado) {
+        cout << "\n[!] EXITO: Paquete encontrado, listo para ser entregado." << endl;
+    } else {
+        cout << "\n[X] ERROR: El paquete no figura en el inventario de esta bodega." << endl;
+    }
+
+    return 0;
+}
