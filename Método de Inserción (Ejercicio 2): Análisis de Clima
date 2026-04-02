@@ -1,0 +1,36 @@
+#include <iostream>
+using namespace std;
+
+int main() {
+    // Temperaturas registradas en la semana (en grados centígrados)
+    float temperaturas[] = {23.5, 18.2, 25.1, 19.8, 21.0, 17.5, 22.4};
+    int dias = 7;
+
+    cout << "--- ESTACION METEOROLOGICA ---" << endl;
+    
+    // Método de Inserción
+    for (int i = 1; i < dias; i++) {
+        float tempActual = temperaturas[i];
+        int j = i - 1;
+
+        // Desplazamos las temperaturas mayores a la derecha
+        while (j >= 0 && temperaturas[j] > tempActual) {
+            temperaturas[j + 1] = temperaturas[j];
+            j--;
+        }
+        // Insertamos la temperatura en su lugar
+        temperaturas[j + 1] = tempActual;
+    }
+
+    // Resultados
+    cout << "Temperaturas ordenadas (De mas fria a mas calurosa):" << endl;
+    for (int i = 0; i < dias; i++) {
+        cout << temperaturas[i] << " C" << endl;
+    }
+    
+    cout << "\nResumen Semanal:" << endl;
+    cout << "Dia mas frio: " << temperaturas[0] << " C" << endl;
+    cout << "Dia mas caluroso: " << temperaturas[dias - 1] << " C" << endl;
+
+    return 0;
+}
